@@ -17,14 +17,15 @@ void account_query::read_data()
 status_t 
 account_query::show_data(BString &target)
 {
-	target = "This is a test";
-	target += "\nAnd this is another test";
+	BString accountDetails;
+	accountDetails = "Account Number: ";
+	accountDetails << account_number << "\nName: " << firstName << " " << lastName << "\n";
+	accountDetails << "Balance: $" << total_Balance << "\n";
+	accountDetails << "-------------------------------\n\n";
+	
+	target += accountDetails.String();
+	
 	return B_OK;
-	cout << "Account Number: " << account_number << endl;
-	cout << "First Name: " << firstName << endl;
-	cout << "Last Name: " << lastName << endl;
-	cout << "Current Balance: USD " << total_Balance << endl;
-	cout << "----------------------------------" << endl;	
 }
 
 void account_query::write_rec()
@@ -42,21 +43,23 @@ status_t account_query::read_rec(BString &target)
 	infile.open("record.bank", ios::binary);
 	if (!infile)
 	{
-		cout << "Error in Opening! File not found!!" << endl;
+		target = "Error in Opening! File not found!!";
 		return B_NO_INIT;	
 	}	
 	
-	target = "***Data from file****\n";
-	return B_OK;
+	target = "***Data from file****\n\n";
+	
 	while (!infile.eof())
 	{
 		if (infile.read(reinterpret_cast<char*>(this), sizeof(*this)))
 		{
-			//show_data();	
+			show_data(target);	
 		}	
 	}
 	
 	infile.close();
+	
+	return B_OK;
 }
 
 void account_query::search_rec()

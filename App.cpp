@@ -12,7 +12,7 @@ App::App(void)
 int main(void)
 {
 
-	App *app = new App();
+	App *app = new App(); 
 	app->Run();
 	delete app;
 

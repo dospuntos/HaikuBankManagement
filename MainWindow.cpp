@@ -19,7 +19,7 @@ enum
 };
 
 MainWindow::MainWindow(void)
-	:	BWindow(BRect(100,100,400,400),"Bank Management",B_DOCUMENT_WINDOW,
+	:	BWindow(BRect(100,100,400,800),"Bank Management",B_DOCUMENT_WINDOW,
 						B_ASYNCHRONOUS_CONTROLS | B_QUIT_ON_WINDOW_CLOSE),
 		fAccountQuery()
 {
@@ -71,6 +71,10 @@ MainWindow::MainWindow(void)
 	{
 		SetTitle(windowTitle.String());
 	}
+	else
+	{
+		SetTitle("Error reading file");	
+	}
 	
 	// Set textView contents
 	BString accountInfo;
@@ -79,7 +83,11 @@ MainWindow::MainWindow(void)
 	{
 		// Add data to textView
 		fTextView->SetText(accountInfo.String());	
-	}	
+	}
+	else
+	{
+		fTextView->SetText("There was an error reading the file.");	
+	}
 }
 
 void
@@ -94,7 +102,7 @@ MainWindow::MessageReceived(BMessage *msg)
 					"the Haiku GUI.\n\n", "OK");
 			alert->Go();
 			break;
-		}	
+		}
 		default:
 		{
 			BWindow::MessageReceived(msg);
