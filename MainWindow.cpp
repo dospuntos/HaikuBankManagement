@@ -7,19 +7,15 @@
 #include <ScrollView.h>
 #include <View.h>
 
-/*
-	M_ADD_RECORD_TO_FILE = "arcd",
-	M_SHOW_RECORD_FROM_FILE = "srff",
-	M_SEARCH_RECORD_IN_FILE = "srch",
-	M_UPDATE_RECORD_ON_FILE = "updt",
-	M_DELETE_RECORD = "dlte",
-*/
-
 // Message constants
-
 enum
 {
-		M_ABOUT_REQUESTED_DPD = "sred",
+	M_ABOUT_REQUESTED = 'abrq',
+	M_ADD_RECORD_TO_FILE = 'arcd',
+	M_SHOW_RECORD_FROM_FILE = 'srff',
+	M_SEARCH_RECORD_IN_FILE = 'srch',
+	M_UPDATE_RECORD_ON_FILE = 'updt',
+	M_DELETE_RECORD = 'dlte',
 };
 
 MainWindow::MainWindow(void)
@@ -43,7 +39,7 @@ MainWindow::MainWindow(void)
 	
 	BButton *about = new BButton(BRect(0,0,1,1), "aboutbutton",
 						"About" B_UTF8_ELLIPSIS,
-						new BMessage(M_ABOUT_REQUESTED_DPD),
+						new BMessage(M_ABOUT_REQUESTED),
 						B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
 	about->ResizeToPreferred();
 	about->MoveTo(close->Frame().left - 15 - about->Frame().Width(),
@@ -56,7 +52,7 @@ MainWindow::MessageReceived(BMessage *msg)
 {
 	switch (msg->what)
 	{
-		case M_ABOUT_REQUESTED_DPD:
+		case M_ABOUT_REQUESTED:
 		{
 			BAlert *alert = new BAlert("Haiku Bank Management",
 					"A basic bank management system using C++ and"
