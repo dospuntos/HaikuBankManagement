@@ -1,0 +1,15 @@
+*.slo
+*.lo
+*.o
+*.obj
+
+*.lai
+*.la
+*.a
+*.lib
+
+*.exe
+*.out
+*.app
+
+record.bank
