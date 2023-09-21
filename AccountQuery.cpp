@@ -2,6 +2,7 @@
 
 void account_query::read_data()
 {
+	
 	cout << "\nEnter Account Number: ";
 	cin >> account_number;
 	cout << "Enter First Name: ";
@@ -13,8 +14,12 @@ void account_query::read_data()
 	cout << endl;
 }
 
-void account_query::show_data()
+status_t 
+account_query::show_data(BString &target)
 {
+	target = "This is a test";
+	target += "\nAnd this is another test";
+	return B_OK;
 	cout << "Account Number: " << account_number << endl;
 	cout << "First Name: " << firstName << endl;
 	cout << "Last Name: " << lastName << endl;
@@ -31,22 +36,23 @@ void account_query::write_rec()
 	outfile.close();	
 }
 
-void account_query::read_rec()
+status_t account_query::read_rec(BString &target)
 {
 	ifstream infile;
 	infile.open("record.bank", ios::binary);
 	if (!infile)
 	{
 		cout << "Error in Opening! File not found!!" << endl;
-		return;	
+		return B_NO_INIT;	
 	}	
 	
-	cout << "\n***Data from file****" << endl;
+	target = "***Data from file****\n";
+	return B_OK;
 	while (!infile.eof())
 	{
 		if (infile.read(reinterpret_cast<char*>(this), sizeof(*this)))
 		{
-			show_data();	
+			//show_data();	
 		}	
 	}
 	
@@ -72,7 +78,7 @@ void account_query::search_rec()
 	infile.seekg((n-1) * sizeof(*this));
 	infile.read(reinterpret_cast<char*>(this), sizeof(*this));
 	
-	show_data();
+	//show_data();
 }
 
 void account_query::edit_rec()
@@ -94,7 +100,7 @@ void account_query::edit_rec()
 	iofile.seekg((n-1)*sizeof(*this));
 	iofile.read(reinterpret_cast<char*>(this), sizeof(*this));
 	cout << "Record " << n << " has the following data:" << endl;
-	show_data();
+	//show_data();
 	iofile.close();
 	iofile.open("record.bank", ios::out|ios::in|ios::binary);
 	iofile.seekp((n-1)*sizeof(*this));
